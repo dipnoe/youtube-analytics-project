@@ -31,9 +31,54 @@ class Channel:
         self.title = self.channel_info['items'][0]['snippet']['title']
         self.description = self.channel_info['items'][0]['snippet']['description']
         self.url = self.YT_URL + self.__channel_id
-        self.subscriber_count = self.channel_info['items'][0]['statistics']['subscriberCount']
-        self.video_count = self.channel_info['items'][0]['statistics']['videoCount']
-        self.view_count = self.channel_info['items'][0]['statistics']['viewCount']
+        self.subscriber_count = int(self.channel_info['items'][0]['statistics']['subscriberCount'])
+        self.video_count = int(self.channel_info['items'][0]['statistics']['videoCount'])
+        self.view_count = int(self.channel_info['items'][0]['statistics']['viewCount'])
+
+    def __str__(self) -> str:
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other) -> int:
+        """
+        Сложение количества подписчиков двух каналов
+        """
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other) -> int:
+        """
+        Вычитание количества подписчиков двух каналов
+        """
+        return self.subscriber_count - other.subscriber_count
+
+    def __lt__(self, other) -> bool:
+        """
+        Сравнение «меньше» количество подписчиков двух каналов
+        """
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other) -> bool:
+        """
+        Сравнение «меньше или равно» количество подписчиков двух каналов
+        """
+        return self.subscriber_count <= other.subscriber_count
+
+    def __gt__(self, other) -> bool:
+        """
+        Сравнение «больше» количество подписчиков двух каналов
+        """
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other) -> bool:
+        """
+        Сравнение «больше или равно» количество подписчиков двух каналов
+        """
+        return self.subscriber_count >= other.subscriber_count
+
+    def __eq__(self, other) -> bool:
+        """
+        Сравнение «равно» количество подписчиков двух каналов
+        """
+        return self.subscriber_count == other.subscriber_count
 
     @property
     def channel_id(self):
