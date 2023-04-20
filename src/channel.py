@@ -1,17 +1,14 @@
 import os
 import json
+from abc import ABC, abstractmethod
 
 from googleapiclient.discovery import build
 
 
-class Channel:
-    """
-    Класс для ютуб-канала
-    """
-
+class Youtube(ABC):
     API_KEY: str = os.getenv('YT_API_KEY')
-    YT_URL: str = 'https://www.youtube.com/channel/'
 
+    # @abstractmethod
     @classmethod
     def get_service(cls):
         """
@@ -19,6 +16,14 @@ class Channel:
         """
         youtube = build('youtube', 'v3', developerKey=cls.API_KEY)
         return youtube
+
+
+class Channel(Youtube):
+    """
+    Класс для ютуб-канала
+    """
+
+    YT_URL: str = 'https://www.youtube.com/channel/'
 
     def __init__(self, channel_id: str) -> None:
         """
