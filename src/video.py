@@ -1,7 +1,7 @@
-from src.channel import Youtube
+from src.channel import ABCYoutube
 
 
-class Video(Youtube):
+class Video(ABCYoutube):
     """
     Класс для получения информации о видео
     """
