@@ -1,14 +1,13 @@
 import os
 import json
-from abc import ABC, abstractmethod
+# from abc import ABC, abstractmethod
 
 from googleapiclient.discovery import build
 
 
-class Youtube(ABC):
+class ABCYoutube:
     API_KEY: str = os.getenv('YT_API_KEY')
 
-    # @abstractmethod
     @classmethod
     def get_service(cls):
         """
@@ -17,8 +16,15 @@ class Youtube(ABC):
         youtube = build('youtube', 'v3', developerKey=cls.API_KEY)
         return youtube
 
+    @staticmethod
+    def print_json(dict_to_print) -> None:
+        """
+        Выводит словарь json
+        """
+        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
 
-class Channel(Youtube):
+
+class Channel(ABCYoutube):
     """
     Класс для ютуб-канала
     """
@@ -91,13 +97,6 @@ class Channel(Youtube):
         Геттер для channel_id
         """
         return self.__channel_id
-
-    @staticmethod
-    def print_json(dict_to_print) -> None:
-        """
-        Выводит словарь json
-        """
-        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
 
     def print_info(self) -> None:
         """
