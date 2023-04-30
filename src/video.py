@@ -9,13 +9,22 @@ class Video(ABCYoutube):
 
     def __init__(self, video_id: str) -> None:
         self.video_id = video_id
-        self.video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                               id=video_id
-                                                               ).execute()
-        self.video_title = self.video_response['items'][0]['snippet']['title']
-        self.video_url = self.YT_VIDEO_URL + self.video_id
-        self.video_count = self.video_response['items'][0]['statistics']['viewCount']
-        self.like_count = self.video_response['items'][0]['statistics']['likeCount']
+
+        try:
+            self.video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                                   id=video_id
+                                                                   ).execute()
+            self.video_title = self.video_response['items'][0]['snippet']['title']
+            self.video_url = self.YT_VIDEO_URL + self.video_id
+            self.video_count = self.video_response['items'][0]['statistics']['viewCount']
+            self.like_count = self.video_response['items'][0]['statistics']['likeCount']
+
+        except Exception:
+            self.video_response = None
+            self.video_title = None
+            self.video_url = None
+            self.video_count = None
+            self.like_count = None
 
     def __str__(self) -> str:
         """
